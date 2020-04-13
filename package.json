@@ -1,0 +1,20 @@
+{
+  "name": "boilerplate",
+  "version": "1.0.0",
+  "description": "boilerplate",
+  "main": "index.js",
+  "scripts": {
+    "sequelize": "node_modules/.bin/sequelize"
+  },
+  "author": "Will Liao",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "path": "^0.12.7",
+    "sequelize": "^5.21.6",
+    "validate.js": "^0.13.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^5.5.1"
+  }
+}
