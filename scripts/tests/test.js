@@ -1,3 +1,5 @@
+/* global SERVICES_PATH */
+
 require('../../config/global_paths')
 const utilities = require(`${SERVICES_PATH}/utilities`)
 
