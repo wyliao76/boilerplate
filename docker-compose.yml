@@ -1,0 +1,37 @@
+version: "3.5"
+
+networks:
+  proxy:
+    name: example
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.88.0/24
+
+volumes:
+  mongodbdata:
+
+services:
+  mongodb:
+    image: mongo:4.2.10-bionic
+    container_name: mongodb
+    restart: always
+    networks:
+      - proxy
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodbdata:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+      MONGO_INITDB_DATABASE: atcdb
+
+  redis:
+    image: redis:6.0-alpine
+    container_name: redis
+    restart: always
+    networks:
+      - proxy
+    ports:
+      - 6379:6379
