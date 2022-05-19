@@ -1,0 +1,23 @@
+  taskkill /IM "vCosmosAgentService.exe" /F
+  del /Q C:\TestAutomation\vCosmosAgent\vCosmosAgentServiceLogs\*
+  C:\TestAutomation\vCosmosAgent\RestartvCosmosAgentService.exe
+  rmdir /Q/S c:\TestAutomation\TestJobs
+  rmdir /Q/S C:\TestAutomation\vCosmosAgent\vCosmosAgentServiceLogs
+  rmdir /Q/S c:\TestAutomation\RecoverAgent\bak_TestJobs_2021_0706_18dn
+  shutdown /r
+
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d "0" /f
+reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Lsa" /v LimitBlankPasswordUse /t REG_DWORD /d "0" /f
+
+Net user Administrator /active:yes
+Net user Administrator /active:no
+
+BiosConfigUtility64.exe /get > systemCheckState.txt
+BiosConfigUtility64.exe /GetConfig:config.txt
+BiosConfigUtility64.exe /setconfig:bios_file_303.txt
+/setvalue:"Serial Number","value"
+
+scp -r root@vcosmos-tpe-itg-3.corp.hpicloud.net:/var/lib/docker/containers/18d339fedd508eda5ba003cb6bb2f14fbfa6c6ffa43860208b42c7021577fad4\18d339fedd508eda5ba003cb6bb2f14fbfa6c6ffa43860208b42c7021577fad4-json.log C:\Users\LiaoWill\Desktop\
+scp -r root@vcosmos-tpe-itg-3.corp.hpicloud.net:/home/docker/containers/6d8742ba813b9211c8027e5e7ec41e7aad76bf314779a927cbd76e46533874b0/6d8742ba813b9211c8027e5e7ec41e7aad76bf314779a927cbd76e46533874b0-json.log C:\Users\LiaoWill\Desktop\
+
+ssh user@ip -i key
