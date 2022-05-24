@@ -1,0 +1,16 @@
+Database dump
+
+pg_dump -a -h remote -U postgres -d database | psql -U postgres -d database
+
+psql -U postgres -d database -f dump.sql
+psql -U postgres -d database < dump.sql
+
+pg_dump -h localhost -U postgres -d database > dump.sql
+
+psql -h localhost -U master -p 5555 database < dump.sql 
+
+pg_dump -h localhost -U master -p 5555 database > dump.sql
+
+redis-cli -h 127.0.0.1 -p 5444
+
+redis-cli -h host.docker.internal -p 5444
