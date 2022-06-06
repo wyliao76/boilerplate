@@ -1,4 +1,14 @@
-# boilerplate
-Useful tools are kept here. Including audit trails.
-
-node_modules/.bin/sequelize model:generate --name invites --attributes invite_token:string,userable_type:string,userable_id:integer,protocol:string,status:string
+# Update OpenAPI interface
+## 1st time set version to 4.3.1
+```
+npx @openapitools/openapi-generator-cli version-manager set 4.3.1
+```
+## Generate
+```
+$ npx @openapitools/openapi-generator-cli generate -g nodejs-express-server -i openapi/openapi.yaml -o src
+```
+or
+```
+$ npm run openapi
+```
+**Note: This should execute everytime if you modify the file `openapi/openapi.yaml`**

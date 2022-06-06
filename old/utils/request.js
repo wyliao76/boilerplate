@@ -9,8 +9,8 @@ const requestPut = promisify(request.put).bind(request)
 const requestDelete = promisify(request.delete).bind(request)
 
 module.exports = {
-  get: requestGet,
-  post: requestPost,
-  put: requestPut,
-  delete: requestDelete
+    get: requestGet,
+    post: requestPost,
+    put: requestPut,
+    delete: requestDelete,
 }

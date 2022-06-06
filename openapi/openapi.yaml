@@ -1,0 +1,186 @@
+openapi: 3.0.1
+info:
+  title: boilerplate
+  version: 1.0.0
+servers:
+  - url: /
+  - url: /api/v1
+security:
+  - v1Token: []
+  - v2Token: []
+  - {}
+paths:
+  /health:
+    get:
+      tags:
+       - health
+      security: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralResponse'
+  /users:
+    get:
+      tags:
+        - users
+      parameters:
+      - name: email
+        in: query
+        schema:
+          type: string
+      - name: sortBy
+        in: query
+        schema:
+          type: string
+          enum: [id, name, type]
+      - name: sortDirection
+        in: query
+        schema:
+          type: string
+          enum: [asc, desc]
+      - name: skip
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 25
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        500:
+          description: Any error
+          content:
+            application/json:
+              schema:
+                type: string
+    post:
+      tags:
+        - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPostInput'
+      responses:
+        200:
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Users'
+        500:
+          description: Any error
+          content:
+            application/json:
+              schema:
+                type: string
+  /users/{email}:
+    put:
+      tags:
+        - users
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/UserUpdate'
+        403:
+          description: No Permissions
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: Any error
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      tags:
+        - users
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        500:
+          description: Any error
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    GeneralResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        payload:
+          type: string
+        error:
+          type: string
+      required:
+        - code
+    Users:
+      type: object
+      properties:
+        email:
+          type: string
+        id:
+          type: string
+    UserPostInput:
+      type: object
+      properties:
+        email: 
+          type: string
+    UserUpdate:
+      type: object
+      properties:
+        enable:
+          type: boolean
+        name:
+          type: string
+  securitySchemes:
+      v1Token:
+        type: apiKey
+        name: token
+        in: header
+      v2Token:
+        type: apiKey
+        name: Authorization
+        in: header

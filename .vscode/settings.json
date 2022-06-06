@@ -1,0 +1,14 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+  },
+  "editor.formatOnSave": false,
+  "cSpell.words": [
+    "upsert",
+    "setex",
+    "smembers",
+    "srem",
+    "sadd",
+    "openapi",
+  ]
+}
