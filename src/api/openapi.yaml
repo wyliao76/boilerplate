@@ -1,0 +1,236 @@
+openapi: 3.0.1
+info:
+  title: boilerplate
+  version: 1.0.0
+servers:
+- url: /
+- url: /api/v1
+security:
+- v1Token: []
+- v2Token: []
+- {}
+paths:
+  /health:
+    get:
+      operationId: healthGET
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralResponse'
+          description: OK
+      security: []
+      tags:
+      - health
+      x-eov-operation-handler: controllers/HealthController
+  /users:
+    get:
+      operationId: usersGET
+      parameters:
+      - explode: true
+        in: query
+        name: email
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          enum:
+          - id
+          - name
+          - type
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: sortDirection
+        required: false
+        schema:
+          enum:
+          - asc
+          - desc
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: skip
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 25
+          maximum: 50
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+          description: OK
+        "500":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Any error
+      security: []
+      tags:
+      - users
+      x-eov-operation-handler: controllers/UsersController
+    post:
+      operationId: usersPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPostInput'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+          description: OK
+        "500":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Any error
+      security: []
+      tags:
+      - users
+      x-eov-operation-handler: controllers/UsersController
+  /users/{email}:
+    delete:
+      operationId: usersEmailDELETE
+      parameters:
+      - explode: false
+        in: path
+        name: email
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+          description: OK
+        "500":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Any error
+      security: []
+      tags:
+      - users
+      x-eov-operation-handler: controllers/UsersController
+    put:
+      operationId: usersEmailPUT
+      parameters:
+      - explode: false
+        in: path
+        name: email
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdate'
+          description: OK
+        "403":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: No Permissions
+        "500":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Any error
+      security: []
+      tags:
+      - users
+      x-eov-operation-handler: controllers/UsersController
+components:
+  schemas:
+    GeneralResponse:
+      example:
+        code: 0
+        payload: payload
+        error: error
+      properties:
+        code:
+          type: integer
+        payload:
+          type: string
+        error:
+          type: string
+      required:
+      - code
+      type: object
+    Users:
+      example:
+        id: id
+        email: email
+      properties:
+        email:
+          type: string
+        id:
+          type: string
+      type: object
+    UserPostInput:
+      example:
+        email: email
+      properties:
+        email:
+          type: string
+      type: object
+    UserUpdate:
+      example:
+        enable: true
+        name: name
+      properties:
+        enable:
+          type: boolean
+        name:
+          type: string
+      type: object
+  securitySchemes:
+    v1Token:
+      in: header
+      name: token
+      type: apiKey
+    v2Token:
+      in: header
+      name: Authorization
+      type: apiKey

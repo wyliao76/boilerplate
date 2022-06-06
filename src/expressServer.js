@@ -9,11 +9,10 @@ const cors = require('cors')
 const helmet = require('helmet')
 const compression = require('compression')
 const Redis = require('ioredis')
-const auth = require('./utils/auth')
 const policies = require('./utils/policies')
 
 const openApiPath = path.join(__dirname, 'api', 'openapi.yaml')
-const schema = jsYaml.safeLoad(fs.readFileSync(openApiPath))
+const schema = jsYaml.load(fs.readFileSync(openApiPath))
 const morgan = require('morgan')
 
 const app = express()
@@ -32,7 +31,6 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
 if (!process.env.DEV_USER) {
     const redisClient = new Redis(`${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`)
-    auth.redis = redisClient
 }
 
 // eslint-disable-next-line new-cap

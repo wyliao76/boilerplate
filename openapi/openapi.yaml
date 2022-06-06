@@ -26,6 +26,7 @@ paths:
     get:
       tags:
         - users
+      security: []
       parameters:
       - name: email
         in: query
@@ -68,6 +69,7 @@ paths:
     post:
       tags:
         - users
+      security: []
       requestBody:
         content:
           application/json:
@@ -90,6 +92,7 @@ paths:
     put:
       tags:
         - users
+      security: []
       parameters:
       - name: email
         in: path
@@ -124,6 +127,7 @@ paths:
     delete:
       tags:
         - users
+      security: []
       parameters:
       - name: email
         in: path

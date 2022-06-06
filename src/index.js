@@ -1,4 +1,4 @@
-require('dotenv').config({ path: `./config/.env.${process.env.NODE_ENV}` })
+require('dotenv').config({ path: `${__dirname}/config/.env.${process.env.NODE_ENV}` })
 
 const mongoose = require('mongoose')
 const { server, app } = require('./expressServer')
@@ -21,10 +21,11 @@ const mongoOptions = {
 
 const launch = async () => {
     try {
-        const mqUrl = process.env.MQ_HOST.replace('://', `://${process.env.MQ_USERNAME}:${encodeURIComponent(process.env.MQ_PASSWORD)}@`)
+        // const mqUrl = process.env.MQ_HOST.replace('://', `://${process.env.MQ_USERNAME}:${encodeURIComponent(process.env.MQ_PASSWORD)}@`)
         const mongoUrl = `mongodb://${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}`
+        console.log({ mongoUrl })
         await Promise.all([
-            process.env.MODE !== 'NO_SUBSCRIBE' ? mqUtils.connect(mqUrl) : null,
+            // process.env.MODE !== 'NO_SUBSCRIBE' ? mqUtils.connect(mqUrl) : null,
             mongoose.connect(mongoUrl, mongoOptions),
         ])
         console.log('MongoDB connect successful.')
