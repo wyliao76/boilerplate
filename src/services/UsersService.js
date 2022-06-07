@@ -1,4 +1,5 @@
 const Service = require('./Service')
+const usersModel = require('../models/users')
 
 const usersEmailDELETE = async (params) => {
     try {
@@ -32,10 +33,14 @@ const usersGET = (params) => {
     }
 }
 
-const usersPOST = (params) => {
+const usersPOST = async (request) => {
     try {
-        console.log(params)
-        return Service.successResponse(params)
+        const { email } = request.body
+        if (!email) throw new Error('missing email address.')
+        const result = await usersModel.create({
+            email,
+        })
+        return Service.successResponse(result)
     } catch (e) {
         return Service.rejectResponse(e)
     }

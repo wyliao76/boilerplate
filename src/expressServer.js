@@ -46,7 +46,6 @@ router.use(
         validateRequests: true,
         validateResponses: false,
         operationHandlers: path.join(__dirname),
-        // ignorePaths: (path) => path.includes('/ws'),
     }),
 )
 

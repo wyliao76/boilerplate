@@ -5,15 +5,12 @@ const { server, app } = require('./expressServer')
 const mqUtils = require('../src/utils/mqUtils')
 
 const mongoOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: process.env.DATABASE_NAME,
     user: process.env.DATABASE_USERNAME,
     pass: process.env.DATABASE_PASSWORD,
-    useCreateIndex: true,
-    useFindAndModify: false,
+    autoIndex: false,
+    dbName: process.env.DATABASE_NAME,
+    maxPoolSize: 100,
     ssl: process.env.NODE_ENV === 'local' ? false : true,
-    poolSize: 50,
     // sslValidate: false,
 }
 

@@ -11,7 +11,6 @@ class Controller {
     * payload will be an object consisting of a code and a payload. If not customized
     * send 200 and the payload as received in this method.
     */
-        console.log(payload)
         response.status(payload.code || 200)
         const responsePayload = payload.payload !== undefined ? payload.payload : payload
         if (responsePayload instanceof Object) {

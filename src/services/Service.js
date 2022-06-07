@@ -1,5 +1,6 @@
 class Service {
     static rejectResponse(error, code = 500) {
+        console.log(error)
         return { error, code }
     }
 
