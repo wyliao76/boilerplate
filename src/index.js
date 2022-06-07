@@ -5,27 +5,24 @@ const { server, app } = require('./expressServer')
 const mqUtils = require('../src/utils/mqUtils')
 
 const mongoOptions = {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
     dbName: process.env.DATABASE_NAME,
     user: process.env.DATABASE_USERNAME,
     pass: process.env.DATABASE_PASSWORD,
     useCreateIndex: true,
     useFindAndModify: false,
     ssl: process.env.NODE_ENV === 'local' ? false : true,
-    server: {
-        poolSize: 50,
-    },
+    poolSize: 50,
     // sslValidate: false,
 }
 
 const launch = async () => {
     try {
-        // const mqUrl = process.env.MQ_HOST.replace('://', `://${process.env.MQ_USERNAME}:${encodeURIComponent(process.env.MQ_PASSWORD)}@`)
+        const mqUrl = process.env.MQ_HOST.replace('://', `://${process.env.MQ_USERNAME}:${encodeURIComponent(process.env.MQ_PASSWORD)}@`)
         const mongoUrl = `mongodb://${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}`
-        console.log({ mongoUrl })
         await Promise.all([
-            // process.env.MODE !== 'NO_SUBSCRIBE' ? mqUtils.connect(mqUrl) : null,
+            process.env.MODE !== 'NO_SUBSCRIBE' ? mqUtils.connect(mqUrl) : null,
             mongoose.connect(mongoUrl, mongoOptions),
         ])
         console.log('MongoDB connect successful.')
@@ -63,7 +60,7 @@ process.on('SIGINT', () => {
         console.log('Http server closed.')
         try {
             await Promise.all([
-                mqUtils.shutdown(),
+                process.env.MODE !== 'NO_SUBSCRIBE' ? mqUtils.shutdown() : null,
                 mongoDBShutdown(),
             ])
             process.exit(0)
