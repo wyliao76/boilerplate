@@ -35,12 +35,7 @@ const usersGET = (params) => {
 
 const usersPOST = async (request) => {
     try {
-        const { email } = request.body
-        if (!email) throw new Error('missing email address.')
-        const result = await usersModel.create({
-            email,
-        })
-        return Service.successResponse(result)
+        return Service.successResponse()
     } catch (e) {
         return Service.rejectResponse(e)
     }
