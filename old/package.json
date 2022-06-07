@@ -1,0 +1,31 @@
+{
+  "name": "boilerplate",
+  "version": "1.0.0",
+  "description": "boilerplate",
+  "main": "app.js",
+  "scripts": {
+    "local_create": "claudia create --config claudia-local.json --region ap-southeast-1 --api-module app --name name-local --role role --no-optional-dependencies --set-env-from-json env.local.json --version local --security-group-ids example --subnet-ids example --cache-api-config claudiaLocalCache --timeout 15 --runtime nodejs12.x --memory 256 --use-s3-bucket example",
+    "local_deploy": "claudia update --config claudia-local.json --no-optional-dependencies --set-env-from-json env.local.json --version local --cache-api-config claudiaLocalCache --timeout 15 --runtime nodejs12.x --memory 256 --use-s3-bucket example",
+    "sequelize": "node_modules/.bin/sequelize"
+  },
+  "author": "Will Liao",
+  "license": "ISC",
+  "dependencies": {
+    "claudia-api-builder": "^4.1.2",
+    "lodash": "^4.17.15",
+    "request": "^2.88.2",
+    "sequelize": "^5.21.6",
+    "validate.js": "^0.13.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "fast-csv": "^4.1.3",
+    "sequelize-cli": "^5.5.1"
+  }
+}

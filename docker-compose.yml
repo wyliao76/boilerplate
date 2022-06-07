@@ -13,7 +13,7 @@ volumes:
 
 services:
   mongodb:
-    image: mongo:4.2.10-bionic
+    image: mongo:5.0-focal
     container_name: mongodb
     restart: always
     networks:
@@ -25,10 +25,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
-      MONGO_INITDB_DATABASE: atcdb
+      MONGO_INITDB_DATABASE: test
 
   redis:
-    image: redis:6.0-alpine
+    image: redis:7.0-alpine
     container_name: redis
     restart: always
     networks:

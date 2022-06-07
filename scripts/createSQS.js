@@ -2,23 +2,23 @@ require('dotenv-json')({ path: `env.${process.env.ENV_JSON}.json` })
 const AWS = require('aws-sdk')
 
 // create a SQS
-async function main () {
-  const sqs = new AWS.SQS({
-    region: process.env.AWS_SNS_REGION
-  })
-  const params = {
-    QueueName: `SQS_pdf_generator_bill-${process.env.ENV_JSON}`,
-    Attributes: {
-      VisibilityTimeout: 180 // cannot be less than lambda's timeout
+async function main() {
+    const sqs = new AWS.SQS({
+        region: process.env.AWS_SNS_REGION,
+    })
+    const params = {
+        QueueName: `SQS_pdf_generator_bill-${process.env.ENV_JSON}`,
+        Attributes: {
+            VisibilityTimeout: 180, // cannot be less than lambda's timeout
+        },
     }
-  }
-  try {
-    const results = await sqs.createQueue(params).promise()
-    console.log(results)
-    return results
-  } catch (err) {
-    console.log(err)
-  }
+    try {
+        const results = await sqs.createQueue(params).promise()
+        console.log(results)
+        return results
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 main()

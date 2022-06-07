@@ -62,7 +62,7 @@ function getElement(object) {
     const { field1, field2 } = object
     const element = {
         field1: iLike(field1),
-        field2: field2.map((object) => iLike(object))
+        field2: field2.map((object) => iLike(object)),
     }
     return element
 }
