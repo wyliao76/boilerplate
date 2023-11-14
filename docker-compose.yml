@@ -10,6 +10,8 @@ networks:
 
 volumes:
   mongodbdata:
+  mysqldata:
+  postgresqldata:
 
 services:
   mongodb:
@@ -35,3 +37,36 @@ services:
       - proxy
     ports:
       - 6379:6379
+
+  mysql:
+    image: mysql:8.2.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    networks:
+      - proxy
+    ports:
+      - 3306:3306
+    volumes:
+      - mysqldata:/data/db
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: test
+      MYSQL_PASSWORD: 123456
+
+  postgresql:
+    image: postgres
+    restart: always
+    networks:
+      - proxy
+    ports:
+      - 5432:5432
+    volumes:
+      - postgresqldata:/data/db
+    environment:
+      POSTGRES_PASSWORD: 123456
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
