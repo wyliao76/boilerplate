@@ -15,7 +15,7 @@ volumes:
 
 services:
   mongodb:
-    image: mongo:5.0-focal
+    image: mongo:7.0.8-jammy
     container_name: mongodb
     restart: always
     networks:
@@ -30,7 +30,7 @@ services:
       MONGO_INITDB_DATABASE: test
 
   redis:
-    image: redis:7.0-alpine
+    image: redis:7.2.4-alpine
     container_name: redis
     restart: always
     networks:
@@ -39,7 +39,7 @@ services:
       - 6379:6379
 
   postgres:
-    image: postgres:latest
+    image: postgres:16.2-alpine
     container_name: postgres
     environment:
       POSTGRES_USER: admin
@@ -51,7 +51,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   mysql:
-    image: mysql:latest
+    image: mysql:8.4.0
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123456
