@@ -9,25 +9,24 @@ networks:
         - subnet: 192.168.88.0/24
 
 volumes:
-  mongodbdata:
+  mongodb_data:
   postgres_data:
   mysql_data:
 
 services:
   mongodb:
-    image: mongo:7.0.8-jammy
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: mongodb
+    hostname: mongodb
     restart: always
     networks:
       - proxy
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
-      - mongodbdata:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 123456
-      MONGO_INITDB_DATABASE: test
+      - mongodb_data:/data/db
 
   redis:
     image: redis:7.2.4-alpine
