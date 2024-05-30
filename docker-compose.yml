@@ -17,7 +17,7 @@ services:
   mongodb:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_mongodb
     container_name: mongodb
     hostname: mongodb
     restart: always
