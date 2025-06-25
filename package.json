@@ -36,6 +36,7 @@
     "mongoose": "^6.3.5",
     "morgan": "^1.10.0",
     "promise-deferred": "^2.0.3",
+    "sequelize": "^6.37.7",
     "swagger-ui-express": "^4.4.0",
     "uuid": "^8.3.2"
   },
